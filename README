@@ -1,0 +1,82 @@
+# Keep Active Pro
+
+A small desktop tool that keeps your computer registering keyboard activity. Every few seconds it types one random letter and immediately deletes it with Backspace, so the screen stays awake and your status stays "active" during long downloads, renders, demos, remote sessions or presentations.
+
+It also tracks each session for you: when it started, when it ended, how long it ran and how many times it performed the task.
+
+## Features
+
+- Types a random letter, then deletes it, on a timer you choose (default 2 seconds)
+- Live **start time**, **end time**, **elapsed timer** and **cycle counter**
+- Timer and counters **reset on every Start**, so each session is measured on its own
+- Runs until **you** stop it, and never stops by itself
+- 9-hour target progress bar (informational only, the app keeps running past 9 hours)
+- 5 colour themes: Light, Dark, Ocean, Forest, Sunset
+- Global **ESC** hotkey to stop from any window
+- **Clear Log** button to wipe the log and reset the counters after a session
+- Resizable, minimizable window with optional "always on top"
+- Every finished session is saved to `keep_active_sessions.csv`
+
+## Requirements
+
+- Python 3.9 or newer
+- Windows, macOS, or Linux (X11 only, not Wayland)
+
+## Install and run
+
+```bash
+git clone https://github.com/YOUR_USERNAME/keep-active-pro.git
+cd keep-active-pro
+pip install -r requirements.txt
+python keep_active_pro.py
+```
+
+## How to use
+
+1. Open the app and choose a theme, an **interval** (seconds between letters) and a **start delay**.
+2. Click **Start**. The window minimizes (unless you untick that option) and a countdown begins.
+3. During the countdown, **click into a safe text field or window** where typing a letter does no harm.
+4. The app now types and deletes a random letter on every interval. The elapsed timer and cycle count update live.
+5. Press **ESC** or click **Stop** to end the session. The start time, end time, duration and total cycles are shown and saved.
+6. Click **Clear Log** to wipe the log and reset the display for the next session.
+
+Emergency stop: moving your mouse into any screen corner also stops it (PyAutoGUI fail-safe).
+
+## Session history
+
+Each finished session is appended to `keep_active_sessions.csv` next to the app:
+
+| start | end | duration | cycles |
+|-------|-----|----------|--------|
+| 21 Nov 2026, 09:00:05 AM | 21 Nov 2026, 06:12:40 PM | 09:12:35 | 16555 |
+
+Clear Log does not delete this file.
+
+## Build a standalone app (no Python needed)
+
+```bash
+pip install pyinstaller
+pyinstaller --onefile --windowed --name KeepActivePro keep_active_pro.py
+```
+
+The result is in `dist/`. Build on each operating system separately: a Windows `.exe` must be built on Windows, and so on.
+
+## Platform notes
+
+- **Windows:** SmartScreen or antivirus may warn about unsigned apps that simulate keystrokes. Choose "More info" then "Run anyway".
+- **macOS:** Allow the app (or your terminal) under System Settings, Privacy & Security, in both **Accessibility** and **Input Monitoring**. For a downloaded app, right-click it and choose Open the first time.
+- **Linux:** Use an X11 session. Wayland blocks synthetic key input.
+
+## Troubleshooting
+
+- **Letters appear in the wrong window:** you did not click into the target window during the start delay. Increase the delay.
+- **Nothing happens on macOS:** grant the permissions above and restart the app.
+- **ESC does not stop it on macOS or Linux:** the global hotkey needs the same permissions, or use the Stop button.
+
+## Responsible use
+
+This tool is meant for legitimate situations such as keeping a screen awake during downloads, renders, demos, kiosks and remote sessions. Check your employer's or school's policies before using it on a managed device. Use it at your own risk.
+
+## License
+
+MIT License. See [LICENSE](LICENSE).

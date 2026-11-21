@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+build/
+dist/
+*.spec
+keep_active_sessions.csv
+.venv/
+venv/
+.idea/
+.vscode/
